@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppName": {
+            "value": "se23123dsa"
+        },
+        "location": {
+            "value": "eastus"
+        },
+        "skuName": {
+            "value": "S1"
+        },
+        "runtime": {
+            "value": "NODE|16-lts"
+        }
+    }
+}
