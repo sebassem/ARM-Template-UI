@@ -339,8 +339,7 @@
 					]
 				}
 			]
-		}
-},
+		},
 "outputs": {
 	"parameters": {
 		"webAppName": "[steps('webApp').webAppName]",
@@ -362,4 +361,5 @@
 	"location": "[steps('basics').resourceScope.location.name]",
 	"resourceGroupId": "[steps('basics').resourceScope.resourceGroup.id]"
 }
+    }
 }
