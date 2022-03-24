@@ -1,0 +1,365 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2021-09-09/uiFormDefinition.schema.json",
+	"view": {
+		"kind": "Form",
+		"properties": {
+			"title": "Web App deployment wizard",
+			"steps": [
+				{
+					"name" : "basics",
+                    "label": "Deployment location",
+                    "elements": [
+                        {
+                            "name": "resourceScope",
+                            "type": "Microsoft.Common.ResourceScope"
+                        }
+                    ]
+				},
+				{
+					"name": "webApp",
+					"label": "WebApp properties",
+					"elements": [
+						{
+							"name": "webAppInfobox",
+							"type": "Microsoft.Common.InfoBox",
+							"visible": true,
+							"options": {
+								"icon": "None",
+								"text": "This wizard will guide through customizing and deploying a web app with all of it's components."
+							}
+						},
+						{
+							"name": "webAppName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Web App Name",
+							"defaultValue": "",
+							"toolTip": "",
+							"constraints": {
+								"required": true,
+								"regex": "",
+								"validationMessage": ""
+							},
+							"visible": true
+						},
+						{
+							"name": "location",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Location",
+							"defaultValue": "[[resourceGroup().location]",
+							"toolTip": "",
+							"constraints": {
+								"required": false,
+								"regex": "",
+								"validationMessage": ""
+							},
+							"visible": true
+						},
+						{
+							"name": "skuName",
+							"type": "Microsoft.Common.DropDown",
+							"label": "Sku Name",
+							"defaultValue": "S1",
+							"toolTip": "",
+							"constraints": {
+								"required": false,
+								"allowedValues": [
+									{
+										"label": "S1",
+										"value": "S1"
+									},
+									{
+										"label": "S2",
+										"value": "S2"
+									},
+									{
+										"label": "S3",
+										"value": "S3"
+									},
+									{
+										"label": "B1",
+										"value": "B1"
+									}
+								]
+							},
+							"visible": true
+						},
+						{
+							"name": "runtime",
+							"type": "Microsoft.Common.DropDown",
+							"label": "Runtime",
+							"defaultValue": "NODE|16-lts",
+							"toolTip": "",
+							"constraints": {
+								"required": false,
+								"allowedValues": [
+									{
+										"label": "NODE|16-lts",
+										"value": "NODE|16-lts"
+									},
+									{
+										"label": "DOTNETCORE|3.0",
+										"value": "DOTNETCORE|3.0"
+									}
+								]
+							},
+							"visible": true
+						}
+					]
+				},
+				{
+					"name": "AppGw",
+					"label": "Application Gateway properties",
+					"elements": [
+						{
+							"name": "deployAppGw",
+							"type": "Microsoft.Common.OptionsGroup",
+							"label": "Do you want to deploy an Application Gateway?",
+							"defaultValue": "false",
+							"toolTip": "",
+							"constraints": {
+								"allowedValues": [
+									{
+										"label": "No",
+										"value": false
+									},
+									{
+										"label": "Yes",
+										"value": true
+									}
+								],
+								"required": true
+							},
+							"visible": true
+						},
+						{
+							"name": "appGwName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "App Gw Name",
+							"defaultValue": "[[format('{0}-appGw', parameters('webAppName'))]",
+							"toolTip": "",
+							"constraints": {
+								"required": false,
+								"regex": "",
+								"validationMessage": ""
+							},
+							"visible": "[steps('AppGw').deployAppGw]"
+						},
+						{
+							"name": "AppGwSku",
+							"type": "Microsoft.Common.DropDown",
+							"label": "Application Gateway SKU",
+							"defaultValue": "Standard_v2",
+							"toolTip": "",
+							"constraints": {
+								"required": false,
+								"allowedValues": [
+									{
+										"label": "Standard_v2",
+										"value": "Standard_v2"
+									},
+									{
+										"label": "WAF_v2",
+										"value": "WAF_v2"
+									}
+								]
+							},
+							"visible": "[steps('AppGw').deployAppGw]"
+						},
+						{
+							"name": "AppGwCapacity",
+							"type": "Microsoft.Common.DropDown",
+							"label": "Application Gateway Capacity",
+							"defaultValue": 2,
+							"toolTip": "",
+							"constraints": {
+								"required": false,
+								"allowedValues": [
+									{
+										"label": "2",
+										"value": 2
+									},
+									{
+										"label": "3",
+										"value": 3
+									},
+									{
+										"label": "4",
+										"value": 4
+									}
+								]
+							},
+							"visible": "[steps('AppGw').deployAppGw]"
+						},
+						{
+							"name": "enableHTTP2",
+							"type": "Microsoft.Common.OptionsGroup",
+							"label": "Enable HTTP2",
+							"defaultValue": false,
+							"toolTip": "",
+							"constraints": {
+								"allowedValues": [
+									{
+										"label": "Yes",
+										"value": true
+									},
+									{
+										"label": "No",
+										"value": false
+									}
+								],
+								"required": true
+							},
+							"visible": "[steps('AppGw').deployAppGw]"
+						}
+					]
+				},
+				{
+					"name": "CosmosDb",
+					"label": "CosmosDb properties",
+					"elements": [
+						{
+							"name": "deployCosmosDb",
+							"type": "Microsoft.Common.OptionsGroup",
+							"label": "Do you want to deploy a Cosmos DB backend?",
+							"defaultValue": "false",
+							"toolTip": "",
+							"constraints": {
+								"allowedValues": [
+									{
+										"label": "No",
+										"value": false
+									},
+									{
+										"label": "Yes",
+										"value": true
+									}
+								],
+								"required": true
+							},
+							"visible": true
+						},
+						{
+							"name": "cosmosDbName",
+							"type": "Microsoft.Common.TextBox",
+							"label": "Cosmos Db Name",
+							"defaultValue": "[[format('{0}-db-{1}', parameters('webAppName'), uniqueString(resourceGroup().id))]",
+							"toolTip": "",
+							"constraints": {
+								"required": false,
+								"regex": "",
+								"validationMessage": ""
+							},
+							"visible": true
+						},
+						{
+							"name": "consistencyLevel",
+							"type": "Microsoft.Common.DropDown",
+							"label": "Select the Cosmos Db consistency level",
+							"placeholder": "",
+							"defaultValue": "ConsistentPrefix",
+							"toolTip": "",
+							"constraints": {
+								"allowedValues": [
+									{
+										"label": "ConsistentPrefix",
+										"value": "ConsistentPrefix"
+									},
+									{
+										"label": "Strong",
+										"value": "Strong"
+									}
+								],
+								"required": true
+							},
+							"visible": "[steps('CosmosDb').deployCosmosDb]"
+						},
+						{
+							"name": "isZoneRedundant",
+							"type": "Microsoft.Common.OptionsGroup",
+							"label": "Deploy in a Zone Redundant setup?",
+							"defaultValue": false,
+							"toolTip": "",
+							"constraints": {
+								"allowedValues": [
+									{
+										"label": "Yes",
+										"value": true
+									},
+									{
+										"label": "No",
+										"value": false
+									}
+								],
+								"required": true
+							},
+							"visible": "[steps('CosmosDb').deployCosmosDb]"
+						},
+						{
+							"name": "enableAutomaticFailover",
+							"type": "Microsoft.Common.OptionsGroup",
+							"label": "Enable Automatic Failover",
+							"defaultValue": false,
+							"toolTip": "",
+							"constraints": {
+								"allowedValues": [
+									{
+										"label": "Yes",
+										"value": true
+									},
+									{
+										"label": "No",
+										"value": false
+									}
+								],
+								"required": true
+							},
+							"visible": "[steps('CosmosDb').deployCosmosDb]"
+						},
+						{
+							"name": "enableFreeTier",
+							"type": "Microsoft.Common.OptionsGroup",
+							"label": "Enable Free Tier",
+							"defaultValue": true,
+							"toolTip": "",
+							"constraints": {
+								"allowedValues": [
+									{
+										"label": "Yes",
+										"value": true
+									},
+									{
+										"label": "No",
+										"value": false
+									}
+								],
+								"required": true
+							},
+							"visible": "[steps('CosmosDb').deployCosmosDb]"
+						}
+					]
+				}
+			]
+		}
+},
+"outputs": {
+	"parameters": {
+		"webAppName": "[steps('webApp').webAppName]",
+		"skuName": "[steps('webApp').skuName]",
+		"runtime": "[steps('webApp').runtime]",
+		"deployGw": "[steps('AppGw').deployGw]",
+		"deployCosmos": "[steps('CosmosDb').deployCosmos]",
+		"defaultConsistencyLevel": "[steps('CosmosDb').defaultConsistencyLevel]",
+		"isZoneRedundant": "[steps('CosmosDb').isZoneRedundant]",
+		"enableAutomaticFailover": "[steps('CosmosDb').enableAutomaticFailover]",
+		"enableFreeTier": "[steps('CosmosDb').enableFreeTier]",
+		"appGwSku": "[steps('AppGw').appGwSku]",
+		"gwCapacity": "[steps('AppGw').gwCapacity]",
+		"enableHttp2": "[steps('AppGw').enableHttp2]",
+		"cosmosDbName": "[steps('CosmosDb').cosmosDbName]",
+		"appGwName": "[steps('AppGw').appGwName]"
+	},
+	"kind": "ResourceGroup",
+	"location": "[steps('basics').resourceScope.location.name]",
+	"resourceGroupId": "[steps('basics').resourceScope.resourceGroup.id]"
+}
+}

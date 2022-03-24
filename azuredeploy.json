@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.1008.15138",
-      "templateHash": "12011702515099243905"
+      "templateHash": "3489015450172137448"
     }
   },
   "parameters": {
@@ -44,7 +44,11 @@
     },
     "defaultConsistencyLevel": {
       "type": "string",
-      "defaultValue": "ConsistentPrefix"
+      "defaultValue": "ConsistentPrefix",
+      "allowedValues": [
+        "Strong",
+        "ConsistentPrefix"
+      ]
     },
     "isZoneRedundant": {
       "type": "bool",
@@ -60,7 +64,11 @@
     },
     "appGwSku": {
       "type": "string",
-      "defaultValue": "Standard_v2"
+      "defaultValue": "Standard_v2",
+      "allowedValues": [
+        "WAF_v2",
+        "Standard_v2"
+      ]
     },
     "gwCapacity": {
       "type": "int",

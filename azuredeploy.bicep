@@ -16,11 +16,19 @@ param skuName string = 'S1'
 param runtime string = 'NODE|16-lts'
 param deployGw bool = false
 param deployCosmos bool = true
+@allowed([
+  'Strong'
+  'ConsistentPrefix'
+])
 param defaultConsistencyLevel string = 'ConsistentPrefix'
 param isZoneRedundant bool = false
 param enableAutomaticFailover bool = false
 param enableFreeTier bool = true
 
+@allowed([
+  'WAF_v2'
+  'Standard_v2'
+])
 param appGwSku string = 'Standard_v2'
 param gwCapacity int = 2
 param enableHttp2 bool = false
