@@ -114,7 +114,7 @@
 							"name": "deployAppGw",
 							"type": "Microsoft.Common.OptionsGroup",
 							"label": "Do you want to deploy an Application Gateway?",
-							"defaultValue": "false",
+							"defaultValue": false,
 							"toolTip": "",
 							"constraints": {
 								"allowedValues": [
@@ -147,7 +147,7 @@
 										"regex": "",
 										"validationMessage": ""
 									},
-									"visible": "[equals(steps('AppGw').deployAppGw,true)]"
+									"visible": true
 								},
 								{
 									"name": "appGwSku",
@@ -219,8 +219,10 @@
 							],
 							"visible": true
 						}
-					]
-				},
+
+							],
+							"visible": "[equals(steps('AppGw').deployAppGw,true)]"
+						},
 				{
 					"name": "CosmosDb",
 					"label": "CosmosDb properties",
