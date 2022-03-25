@@ -350,7 +350,7 @@
 									"visible": true
 								}
 							],
-							"visible": "[steps('CosmosDb').deployCosmosDb]"
+							"visible": "[equals(steps('CosmosDb').deployCosmosDb,true)]"
 						}
 						
 					]
