@@ -342,20 +342,7 @@
 		},
 "outputs": {
 	"parameters": {
-		"webAppName": "[steps('webApp').webAppName]",
-		"skuName": "[steps('webApp').skuName]",
-		"runtime": "[steps('webApp').runtime]",
-		"deployGw": "[steps('AppGw').deployGw]",
-		"deployCosmos": "[steps('CosmosDb').deployCosmos]",
-		"defaultConsistencyLevel": "[steps('CosmosDb').defaultConsistencyLevel]",
-		"isZoneRedundant": "[steps('CosmosDb').isZoneRedundant]",
-		"enableAutomaticFailover": "[steps('CosmosDb').enableAutomaticFailover]",
-		"enableFreeTier": "[steps('CosmosDb').enableFreeTier]",
-		"appGwSku": "[steps('AppGw').appGwSku]",
-		"gwCapacity": "[steps('AppGw').gwCapacity]",
-		"enableHttp2": "[steps('AppGw').enableHttp2]",
-		"cosmosDbName": "[steps('CosmosDb').cosmosDbName]",
-		"appGwName": "[steps('AppGw').appGwName]"
+		"cosmosDbName": "[steps('CosmosDb').cosmosDbName]"
 	},
 	"kind": "ResourceGroup",
 	"location": "[steps('basics').resourceScope.location.name]",
