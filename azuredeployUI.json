@@ -369,7 +369,7 @@
 		"enableAutomaticFailover": "[steps('CosmosDb').cosmosDbSection.enableAutomaticFailover]",
 		"enableFreeTier": "[steps('CosmosDb').cosmosDbSection.enableFreeTier]",
 		"appGwSku": "[steps('AppGw').appGWSection.appGwSku]",
-		"gwCapacity": "[steps('AppGw').appGWSection.gwCapacity]",
+		"gwCapacity": "[steps('AppGw').appGWSection.appGwCapacity]",
 		"enableHttp2": "[steps('AppGw').appGWSection.enableHttp2]",
 		"cosmosDbName": "[steps('CosmosDb').cosmosDbSection.cosmosDbName]",
 		"appGwName": "[steps('AppGw').appGWSection.appGwName]"
