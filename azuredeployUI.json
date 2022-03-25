@@ -196,7 +196,7 @@
 									"visible": true
 								},
 								{
-									"name": "enableHTTP2",
+									"name": "enableHttp2",
 									"type": "Microsoft.Common.OptionsGroup",
 									"label": "Enable HTTP2",
 									"defaultValue": false,
