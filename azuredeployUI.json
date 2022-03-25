@@ -196,9 +196,9 @@
 									"visible": true
 								},
 								{
-									"name": "enableHttp2",
+									"name": "enableHttp",
 									"type": "Microsoft.Common.OptionsGroup",
-									"label": "Enable HTTP2",
+									"label": "Enable HTTP",
 									"defaultValue": false,
 									"toolTip": "",
 									"constraints": {
@@ -370,7 +370,7 @@
 		"enableFreeTier": "[steps('CosmosDb').cosmosDbSection.enableFreeTier]",
 		"appGwSku": "[steps('AppGw').appGWSection.appGwSku]",
 		"gwCapacity": "[steps('AppGw').appGWSection.appGwCapacity]",
-		"enableHttp2": "[steps('AppGw').appGWSection.enableHttp2]",
+		"enableHttp": "[steps('AppGw').appGWSection.enableHttp]",
 		"cosmosDbName": "[steps('CosmosDb').cosmosDbSection.cosmosDbName]",
 		"appGwName": "[steps('AppGw').appGWSection.appGwName]"
 	},
