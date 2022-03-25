@@ -364,7 +364,7 @@
 		"runtime": "[steps('webApp').runtime]",
 		"deployGw": "[steps('AppGw').deployAppGw]",
 		"deployCosmos": "[steps('CosmosDb').deployCosmosDb]",
-		"defaultConsistencyLevel": "[steps('CosmosDb').defaultConsistencyLevel]",
+		"defaultConsistencyLevel": "[steps('CosmosDb').consistencyLevel]",
 		"isZoneRedundant": "[steps('CosmosDb').isZoneRedundant]",
 		"enableAutomaticFailover": "[steps('CosmosDb').enableAutomaticFailover]",
 		"enableFreeTier": "[steps('CosmosDb').enableFreeTier]",
