@@ -230,7 +230,7 @@
 							"name": "deployCosmosDb",
 							"type": "Microsoft.Common.OptionsGroup",
 							"label": "Do you want to deploy a Cosmos DB backend?",
-							"defaultValue": "false",
+							"defaultValue": false,
 							"toolTip": "",
 							"constraints": {
 								"allowedValues": [
