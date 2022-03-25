@@ -40,7 +40,7 @@
     },
     "deployCosmosDb": {
       "type": "bool",
-      "defaultValue": true
+      "defaultValue": false
     },
     "defaultConsistencyLevel": {
       "type": "string",
@@ -142,9 +142,9 @@
       ]
     },
     {
-      "condition": "[parameters('deployCosmosDb')]",
       "type": "Microsoft.DocumentDB/databaseAccounts",
       "apiVersion": "2021-11-15-preview",
+      "condition": "[parameters('deployCosmosDb')]",
       "name": "[parameters('cosmosDbName')]",
       "location": "[parameters('location')]",
       "properties": {
