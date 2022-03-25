@@ -150,7 +150,7 @@
 									"visible": "[equals(steps('AppGw').deployAppGw,true)]"
 								},
 								{
-									"name": "AppGwSku",
+									"name": "appGwSku",
 									"type": "Microsoft.Common.DropDown",
 									"label": "Application Gateway SKU",
 									"defaultValue": "Standard_v2",
@@ -171,7 +171,7 @@
 									"visible": true
 								},
 								{
-									"name": "AppGwCapacity",
+									"name": "appGwCapacity",
 									"type": "Microsoft.Common.DropDown",
 									"label": "Application Gateway Capacity",
 									"defaultValue": 2,
