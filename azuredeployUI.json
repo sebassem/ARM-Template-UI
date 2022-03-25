@@ -132,84 +132,92 @@
 							"visible": true
 						},
 						{
-							"name": "appGwName",
-							"type": "Microsoft.Common.TextBox",
-							"label": "App Gw Name",
-							"defaultValue": "[[format('{0}-appGw', parameters('webAppName'))]",
-							"toolTip": "",
-							"constraints": {
-								"required": false,
-								"regex": "",
-								"validationMessage": ""
-							},
-							"visible": "[steps('AppGw').deployAppGw]"
-						},
-						{
-							"name": "AppGwSku",
-							"type": "Microsoft.Common.DropDown",
-							"label": "Application Gateway SKU",
-							"defaultValue": "Standard_v2",
-							"toolTip": "",
-							"constraints": {
-								"required": false,
-								"allowedValues": [
-									{
-										"label": "Standard_v2",
-										"value": "Standard_v2"
+							"name": "appGWSection",
+							"type": "Microsoft.Common.Section",
+							"label": "Application Gateway properties",
+							"elements": [
+								{
+									"name": "appGwName",
+									"type": "Microsoft.Common.TextBox",
+									"label": "App Gw Name",
+									"defaultValue": "[[format('{0}-appGw', parameters('webAppName'))]",
+									"toolTip": "",
+									"constraints": {
+										"required": false,
+										"regex": "",
+										"validationMessage": ""
 									},
-									{
-										"label": "WAF_v2",
-										"value": "WAF_v2"
-									}
-								]
-							},
-							"visible": "[steps('AppGw').deployAppGw]"
-						},
-						{
-							"name": "AppGwCapacity",
-							"type": "Microsoft.Common.DropDown",
-							"label": "Application Gateway Capacity",
-							"defaultValue": 2,
-							"toolTip": "",
-							"constraints": {
-								"required": false,
-								"allowedValues": [
-									{
-										"label": "2",
-										"value": 2
+									"visible": "[equals(steps('AppGw').deployAppGw,true)]"
+								},
+								{
+									"name": "AppGwSku",
+									"type": "Microsoft.Common.DropDown",
+									"label": "Application Gateway SKU",
+									"defaultValue": "Standard_v2",
+									"toolTip": "",
+									"constraints": {
+										"required": false,
+										"allowedValues": [
+											{
+												"label": "Standard_v2",
+												"value": "Standard_v2"
+											},
+											{
+												"label": "WAF_v2",
+												"value": "WAF_v2"
+											}
+										]
 									},
-									{
-										"label": "3",
-										"value": 3
+									"visible": true
+								},
+								{
+									"name": "AppGwCapacity",
+									"type": "Microsoft.Common.DropDown",
+									"label": "Application Gateway Capacity",
+									"defaultValue": 2,
+									"toolTip": "",
+									"constraints": {
+										"required": false,
+										"allowedValues": [
+											{
+												"label": "2",
+												"value": 2
+											},
+											{
+												"label": "3",
+												"value": 3
+											},
+											{
+												"label": "4",
+												"value": 4
+											}
+										]
 									},
-									{
-										"label": "4",
-										"value": 4
-									}
-								]
-							},
-							"visible": "[steps('AppGw').deployAppGw]"
-						},
-						{
-							"name": "enableHTTP2",
-							"type": "Microsoft.Common.OptionsGroup",
-							"label": "Enable HTTP2",
-							"defaultValue": false,
-							"toolTip": "",
-							"constraints": {
-								"allowedValues": [
-									{
-										"label": "Yes",
-										"value": true
+									"visible": true
+								},
+								{
+									"name": "enableHTTP2",
+									"type": "Microsoft.Common.OptionsGroup",
+									"label": "Enable HTTP2",
+									"defaultValue": false,
+									"toolTip": "",
+									"constraints": {
+										"allowedValues": [
+											{
+												"label": "Yes",
+												"value": true
+											},
+											{
+												"label": "No",
+												"value": false
+											}
+										],
+										"required": true
 									},
-									{
-										"label": "No",
-										"value": false
-									}
-								],
-								"required": true
-							},
-							"visible": "[steps('AppGw').deployAppGw]"
+									"visible": true
+								}
+							],
+							"visible": true
 						}
 					]
 				},
@@ -239,103 +247,112 @@
 							"visible": true
 						},
 						{
-							"name": "cosmosDbName",
-							"type": "Microsoft.Common.TextBox",
-							"label": "Cosmos Db Name",
-							"defaultValue": "[[format('{0}-db-{1}', parameters('webAppName'), uniqueString(resourceGroup().id))]",
-							"toolTip": "",
-							"constraints": {
-								"required": false,
-								"regex": "",
-								"validationMessage": ""
-							},
-							"visible": true
-						},
-						{
-							"name": "consistencyLevel",
-							"type": "Microsoft.Common.DropDown",
-							"label": "Select the Cosmos Db consistency level",
-							"placeholder": "",
-							"defaultValue": "ConsistentPrefix",
-							"toolTip": "",
-							"constraints": {
-								"allowedValues": [
-									{
-										"label": "ConsistentPrefix",
-										"value": "ConsistentPrefix"
+							"name": "cosmosDbSection",
+							"type": "Microsoft.Common.Section",
+							"label": "Cosmos DB properties",
+							"elements": [
+								{
+									"name": "cosmosDbName",
+									"type": "Microsoft.Common.TextBox",
+									"label": "Cosmos Db Name",
+									"defaultValue": "[[format('{0}-db-{1}', parameters('webAppName'), uniqueString(resourceGroup().id))]",
+									"toolTip": "",
+									"constraints": {
+										"required": false,
+										"regex": "",
+										"validationMessage": ""
 									},
-									{
-										"label": "Strong",
-										"value": "Strong"
-									}
-								],
-								"required": true
-							},
-							"visible": "[steps('CosmosDb').deployCosmosDb]"
-						},
-						{
-							"name": "isZoneRedundant",
-							"type": "Microsoft.Common.OptionsGroup",
-							"label": "Deploy in a Zone Redundant setup?",
-							"defaultValue": false,
-							"toolTip": "",
-							"constraints": {
-								"allowedValues": [
-									{
-										"label": "Yes",
-										"value": true
+									"visible": true
+								},
+								{
+									"name": "consistencyLevel",
+									"type": "Microsoft.Common.DropDown",
+									"label": "Select the Cosmos Db consistency level",
+									"placeholder": "",
+									"defaultValue": "ConsistentPrefix",
+									"toolTip": "",
+									"constraints": {
+										"allowedValues": [
+											{
+												"label": "ConsistentPrefix",
+												"value": "ConsistentPrefix"
+											},
+											{
+												"label": "Strong",
+												"value": "Strong"
+											}
+										],
+										"required": true
 									},
-									{
-										"label": "No",
-										"value": false
-									}
-								],
-								"required": true
-							},
-							"visible": "[steps('CosmosDb').deployCosmosDb]"
-						},
-						{
-							"name": "enableAutomaticFailover",
-							"type": "Microsoft.Common.OptionsGroup",
-							"label": "Enable Automatic Failover",
-							"defaultValue": false,
-							"toolTip": "",
-							"constraints": {
-								"allowedValues": [
-									{
-										"label": "Yes",
-										"value": true
+									"visible": true
+								},
+								{
+									"name": "isZoneRedundant",
+									"type": "Microsoft.Common.OptionsGroup",
+									"label": "Deploy in a Zone Redundant setup?",
+									"defaultValue": false,
+									"toolTip": "",
+									"constraints": {
+										"allowedValues": [
+											{
+												"label": "Yes",
+												"value": true
+											},
+											{
+												"label": "No",
+												"value": false
+											}
+										],
+										"required": true
 									},
-									{
-										"label": "No",
-										"value": false
-									}
-								],
-								"required": true
-							},
-							"visible": "[steps('CosmosDb').deployCosmosDb]"
-						},
-						{
-							"name": "enableFreeTier",
-							"type": "Microsoft.Common.OptionsGroup",
-							"label": "Enable Free Tier",
-							"defaultValue": true,
-							"toolTip": "",
-							"constraints": {
-								"allowedValues": [
-									{
-										"label": "Yes",
-										"value": true
+									"visible": true
+								},
+								{
+									"name": "enableAutomaticFailover",
+									"type": "Microsoft.Common.OptionsGroup",
+									"label": "Enable Automatic Failover",
+									"defaultValue": false,
+									"toolTip": "",
+									"constraints": {
+										"allowedValues": [
+											{
+												"label": "Yes",
+												"value": true
+											},
+											{
+												"label": "No",
+												"value": false
+											}
+										],
+										"required": true
 									},
-									{
-										"label": "No",
-										"value": false
-									}
-								],
-								"required": true
-							},
+									"visible": true
+								},
+								{
+									"name": "enableFreeTier",
+									"type": "Microsoft.Common.OptionsGroup",
+									"label": "Enable Free Tier",
+									"defaultValue": true,
+									"toolTip": "",
+									"constraints": {
+										"allowedValues": [
+											{
+												"label": "Yes",
+												"value": true
+											},
+											{
+												"label": "No",
+												"value": false
+											}
+										],
+										"required": true
+									},
+									"visible": true
+								}
+							],
 							"visible": "[steps('CosmosDb').deployCosmosDb]"
 						}
+						
 					]
 				}
 			]
