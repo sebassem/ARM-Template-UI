@@ -34,11 +34,11 @@
         "DOTNETCORE|3.0"
       ]
     },
-    "deployGw": {
+    "deployAppGw": {
       "type": "bool",
       "defaultValue": false
     },
-    "deployCosmos": {
+    "deployCosmosDb": {
       "type": "bool",
       "defaultValue": true
     },
@@ -70,11 +70,11 @@
         "Standard_v2"
       ]
     },
-    "gwCapacity": {
+    "appGwCapacity": {
       "type": "int",
       "defaultValue": 2
     },
-    "enableHttp2": {
+    "enableHttp": {
       "type": "bool",
       "defaultValue": false
     },
@@ -129,9 +129,9 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "siteConfig": {
-          "ipSecurityRestrictions": "[if(parameters('deployGw'), createArray(createObject('ipAddress', format('{0}/32', reference(resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', parameters('webAppName')))).ipAddress))), json('null'))]",
+          "ipSecurityRestrictions": "[if(parameters('deployAppGw'), createArray(createObject('ipAddress', format('{0}/32', reference(resourceId('Microsoft.Network/publicIPAddresses', format('{0}-PIP', parameters('webAppName')))).ipAddress))), json('null'))]",
           "linuxFxVersion": "[parameters('runtime')]",
-          "appSettings": "[if(parameters('deployCosmos'), createArray(createObject('name', 'APPINSIGHTS_INSTRUMENTATIONKEY', 'value', reference(resourceId('Microsoft.Insights/components', format('insights-{0}', parameters('webAppName')))).InstrumentationKey), createObject('name', 'APPLICATIONINSIGHTS_CONNECTION_STRING', 'value', reference(resourceId('Microsoft.Insights/components', format('insights-{0}', parameters('webAppName')))).ConnectionString), createObject('name', 'DOCUMENTDB_ENDPOINT', 'value', reference(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbName'))).documentEndpoint), createObject('name', 'DOCUMENTDB_PRIMARY_KEY', 'value', listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbName')), '2021-11-15-preview').primaryMasterKey)), createArray(createObject('name', 'APPINSIGHTS_INSTRUMENTATIONKEY', 'value', reference(resourceId('Microsoft.Insights/components', format('insights-{0}', parameters('webAppName')))).InstrumentationKey), createObject('name', 'APPLICATIONINSIGHTS_CONNECTION_STRING', 'value', reference(resourceId('Microsoft.Insights/components', format('insights-{0}', parameters('webAppName')))).ConnectionString)))]"
+          "appSettings": "[if(parameters('deployCosmosDb'), createArray(createObject('name', 'APPINSIGHTS_INSTRUMENTATIONKEY', 'value', reference(resourceId('Microsoft.Insights/components', format('insights-{0}', parameters('webAppName')))).InstrumentationKey), createObject('name', 'APPLICATIONINSIGHTS_CONNECTION_STRING', 'value', reference(resourceId('Microsoft.Insights/components', format('insights-{0}', parameters('webAppName')))).ConnectionString), createObject('name', 'DOCUMENTDB_ENDPOINT', 'value', reference(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbName'))).documentEndpoint), createObject('name', 'DOCUMENTDB_PRIMARY_KEY', 'value', listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbName')), '2021-11-15-preview').primaryMasterKey)), createArray(createObject('name', 'APPINSIGHTS_INSTRUMENTATIONKEY', 'value', reference(resourceId('Microsoft.Insights/components', format('insights-{0}', parameters('webAppName')))).InstrumentationKey), createObject('name', 'APPLICATIONINSIGHTS_CONNECTION_STRING', 'value', reference(resourceId('Microsoft.Insights/components', format('insights-{0}', parameters('webAppName')))).ConnectionString)))]"
         }
       },
       "dependsOn": [
@@ -142,7 +142,7 @@
       ]
     },
     {
-      "condition": "[parameters('deployCosmos')]",
+      "condition": "[parameters('deployCosmosDb')]",
       "type": "Microsoft.DocumentDB/databaseAccounts",
       "apiVersion": "2021-11-15-preview",
       "name": "[parameters('cosmosDbName')]",
@@ -164,7 +164,7 @@
       }
     },
     {
-      "condition": "[parameters('deployGw')]",
+      "condition": "[parameters('deployAppGw')]",
       "type": "Microsoft.Network/virtualNetworks",
       "apiVersion": "2021-05-01",
       "name": "[parameters('vnetName')]",
@@ -192,7 +192,7 @@
       }
     },
     {
-      "condition": "[parameters('deployGw')]",
+      "condition": "[parameters('deployAppGw')]",
       "type": "Microsoft.Network/publicIPAddresses",
       "apiVersion": "2021-05-01",
       "name": "[format('{0}-PIP', parameters('webAppName'))]",
@@ -205,7 +205,7 @@
       }
     },
     {
-      "condition": "[parameters('deployGw')]",
+      "condition": "[parameters('deployAppGw')]",
       "type": "Microsoft.Network/applicationGateways",
       "apiVersion": "2021-05-01",
       "name": "[parameters('appGwName')]",
@@ -214,9 +214,9 @@
         "sku": {
           "name": "[parameters('appGwSku')]",
           "tier": "[parameters('appGwSku')]",
-          "capacity": "[parameters('gwCapacity')]"
+          "capacity": "[parameters('appGwCapacity')]"
         },
-        "enableHttp2": "[parameters('enableHttp2')]",
+        "enableHttp2": "[parameters('enableHttp')]",
         "backendAddressPools": [
           {
             "name": "webApp-pool",
@@ -234,7 +234,7 @@
             "name": "gatewayIPConfig",
             "properties": {
               "subnet": {
-                "id": "[if(parameters('deployGw'), reference(resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))).subnets[1].id, json('null'))]"
+                "id": "[if(parameters('deployAppGw'), reference(resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))).subnets[1].id, json('null'))]"
               }
             }
           }
