@@ -135,6 +135,7 @@
 							"name": "appGWSection",
 							"type": "Microsoft.Common.Section",
 							"label": "Application Gateway properties",
+							"visible": "[equals(steps('AppGw').deployAppGw,true)]",
 							"elements": [
 								{
 									"name": "appGwName",
@@ -216,12 +217,10 @@
 									},
 									"visible": true
 								}
-							],
-							"visible": true
+							]
 						}
 
-							],
-							"visible": "[equals(steps('AppGw').deployAppGw,true)]"
+							]
 						},
 				{
 					"name": "CosmosDb",
