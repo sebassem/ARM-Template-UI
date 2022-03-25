@@ -141,7 +141,7 @@
 									"name": "appGwName",
 									"type": "Microsoft.Common.TextBox",
 									"label": "App Gw Name",
-									"defaultValue": "[[format('{0}-appGw', parameters('webAppName'))]",
+									"defaultValue": "",
 									"toolTip": "",
 									"constraints": {
 										"required": false,
@@ -256,7 +256,7 @@
 									"name": "cosmosDbName",
 									"type": "Microsoft.Common.TextBox",
 									"label": "Cosmos Db Name",
-									"defaultValue": "[[format('{0}-db-{1}', parameters('webAppName'), uniqueString(resourceGroup().id))]",
+									"defaultValue": "",
 									"toolTip": "",
 									"constraints": {
 										"required": false,
