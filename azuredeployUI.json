@@ -363,7 +363,7 @@
 		"skuName": "[steps('webApp').skuName]",
 		"runtime": "[steps('webApp').runtime]",
 		"deployGw": "[steps('AppGw').deployAppGw]",
-		"deployCosmos": "[steps('CosmosDb').deployCosmos]",
+		"deployCosmos": "[steps('CosmosDb').deployCosmosDb]",
 		"defaultConsistencyLevel": "[steps('CosmosDb').defaultConsistencyLevel]",
 		"isZoneRedundant": "[steps('CosmosDb').isZoneRedundant]",
 		"enableAutomaticFailover": "[steps('CosmosDb').enableAutomaticFailover]",
